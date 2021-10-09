@@ -37,3 +37,15 @@ $router->get(
         'as'   => 'category-list'
     ]
 );
+
+//======================================
+// TaskController
+//======================================
+
+$router->get(
+    '/tasks',
+    [
+        'uses' => 'TaskController@list',
+        'as'   => 'task-list'
+    ]
+);

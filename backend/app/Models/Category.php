@@ -9,7 +9,7 @@ class Category extends Model
     /**
      * Relation one to many avec les tâches
      */
-    public function tasks()
+    public function task()
     {
       return $this->hasMany( 'App\Models\Task' );
     }

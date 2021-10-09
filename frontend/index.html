@@ -54,7 +54,7 @@
                 </button>
             </form>
 
-            <section>
+            <section id="taskList">
                 <div class="task">
                     <div class="task__box">
                         <div class="task__title">
@@ -253,8 +253,52 @@
         </footer>
     </div>
 
+    <script src="assets/js/components/task.js"></script>
+    <script src="assets/js/components/tasksList.js"></script>
     <script src="assets/js/components/categoriesList.js"></script>
     <script src="assets/js/app.js"></script>
 </body>
 
 </html>
+
+
+<template id="taskTemplate">
+    <div class="task">
+        <div class="task__box">
+            <div class="task__title">
+                <p class="task__title-label"></p>
+                <input type="text" name="title" value="" class="task__title-field">
+            </div>
+            <div class="task__category">
+                <p class="task__category-label"></p>
+            </div>
+            <ul class="task__list">
+                <li class="task__list-item task__list-item--complete">
+                    <button class="task__button">
+                        <i class="far fa-check-square"></i>
+                    </button>
+                </li>
+                <li class="task__list-item task__list-item--incomplete">
+                    <button class="task__button">
+                        <i class="fas fa-step-backward"></i>
+                    </button>
+                </li>
+                <li class="task__list-item task__list-item--archive">
+                    <button class="task__button">
+                        <i class="fas fa-archive"></i>
+                    </button>
+                </li>
+                <li class="task__list-item task__list-item--desarchive">
+                    <button class="task__button">
+                        <i class="fas fa-undo-alt"></i>
+                    </button>
+                </li>
+                <li class="task__list-item task__list-item--delete">
+                    <button class="task__button">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</template>
