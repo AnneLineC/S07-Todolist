@@ -3,7 +3,7 @@ const categoriesList = {
 
         // Chargement des catégories
         categoriesList.loadCategoriesFromAPI();
-        
+
     },
 
     /**
@@ -27,9 +27,27 @@ const categoriesList = {
         )
         .then(
             function(data) {
-                console.log(data);
-
+                // Création des options pour les deux select de l'interface
+                for (let category of data) {
+                    categoriesList.createOptionElement( document.getElementById('filterCategorySelect'), category.name, category.id );
+                    categoriesList.createOptionElement( document.getElementById('addTaskForm-selectCategory'), category.name, category.id );
+                }
             }
         );
+    },
+
+    /**
+     * Méthode permettant la création d'options dans un select
+     * 
+     * @param {*} selectElement 
+     * @param {string} categoryName 
+     * @param {int} categoryId 
+     */
+    createOptionElement: function(selectElement, categoryName, categoryId) {
+        let optionElement = document.createElement('option');
+        optionElement.textContent = categoryName;
+        optionElement.setAttribute('value', categoryId);
+
+        selectElement.appendChild(optionElement);
     }
 }
