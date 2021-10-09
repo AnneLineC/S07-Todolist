@@ -1,5 +1,10 @@
 const app = {
+
+    apiBaseUrl: 'http://localhost:8080/',
+
     init: function() {
+
+        categoriesList.init();
 
         // ----------------------------------------------------------------
         // Menu burger responsive

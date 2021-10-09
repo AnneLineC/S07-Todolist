@@ -13,6 +13,27 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+//======================================
+// MainController
+//======================================
+
+$router->get(
+    '/',
+    [
+        'uses' => 'MainController@home',
+        'as'   => 'main-home'
+    ]
+  );
+
+
+//======================================
+// CategoryController
+//======================================
+
+$router->get(
+    '/categories',
+    [
+        'uses' => 'CategoryController@list',
+        'as'   => 'category-list'
+    ]
+);
