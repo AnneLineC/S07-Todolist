@@ -123,6 +123,12 @@ body {
     display: none;
 }
 
+.task__title-field {
+    border: 1px dotted var(--color-strong);
+    border-radius: 1rem;
+    width: 100%;
+}
+
 .task__category {
     flex: 1;
     text-align: center;
@@ -148,6 +154,14 @@ body {
 
 .task__list-item--delete {
     display: none;
+}
+
+.task--edit .task__title-label {
+    display: none;
+}
+
+.task--edit .task__title-field {
+    display: block;
 }
 
 .task--complete .task__title-label,
