@@ -29,6 +29,23 @@ $app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
+| Configure CORS
+|--------------------------------------------------------------------------
+|
+| https://galib-rabib.medium.com/how-to-fix-cors-error-in-lumen-api-services-ba5a62d23507
+|
+*/
+
+$app->register(Fruitcake\Cors\CorsServiceProvider::class);
+
+$app->configure('cors');
+
+$app->middleware([
+    Fruitcake\Cors\HandleCors::class,
+]);
+
+/*
+|--------------------------------------------------------------------------
 | Register Container Bindings
 |--------------------------------------------------------------------------
 |
