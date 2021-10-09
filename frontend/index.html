@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TodoList</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header class="header">
+            <div class="header__content">
+                <button class="burger" id="burger">
+                    <span class="burger__bar"></span>
+                    <span class="burger__bar"></span>
+                    <span class="burger__bar"></span>
+                </button>
+                <h1 class="main-title">TodoList</h1>
+                <nav class="nav" id="main-nav">
+                    <select class="nav__select" id="filterCategorySelect">
+                        <option value="">Toutes les catégories</option>
+                        <option value="courses">Courses</option>
+                        <option value="oclock">O'Clock</option>
+                        <option value="projet-professionnel">Projet professionnel</option>
+                    </select>
+                    <div>
+                        <button class="nav__archives">
+                            <i class="fas fa-archive"></i> Voir les archives
+                        </button>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main">
+            <form class="add-form" id="addTaskForm">
+                <input type="text" class="add-form__input" placeholder="Nom de la tâche">
+                <select class="add-form__select" id="addTaskForm-selectCategory">
+                    <option class="add-form__option" value="">Toutes les catégories</option>
+                    <option class="add-form__option" value="courses">Courses</option>
+                    <option class="add-form__option" value="oclock">O'Clock</option>
+                    <option class="add-form__option" value="projet-professionnel">Projet professionnel</option>
+                </select>
+                <button type="submit" class="add-form__button" id="addTaskForm-buttonSubmit">
+                    <i class="fas fa-plus"></i> Ajouter
+                </button>
+            </form>
+
+            <section>
+                <div class="task">
+                    <div class="task__box">
+                        <div class="task__title">
+                            <p class="task__title-label">Acheter du pain</p>
+                            <input type="text" name="title" value="Acheter du pain" class="task__title-field">
+                        </div>
+                        <div class="task__category">
+                            <p class="task__category-label">Courses</p>
+                        </div>
+                        <ul class="task__list">
+                            <li class="task__list-item task__list-item--complete">
+                                <button class="task__button">
+                                    <i class="far fa-check-square"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--incomplete">
+                                <button class="task__button">
+                                    <i class="fas fa-step-backward"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--archive">
+                                <button class="task__button">
+                                    <i class="fas fa-archive"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--desarchive">
+                                <button class="task__button">
+                                    <i class="fas fa-undo-alt"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--delete">
+                                <button class="task__button">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="task">
+                    <div class="task__box">
+                        <div class="task__title">
+                            <p class="task__title-label">Réviser les objets en PHP</p>
+                            <input type="text" name="title" value="Réviser les objets en PHP" class="task__title-field">
+                        </div>
+                        <div class="task__category">
+                            <p class="task__category-label">Projet pro</p>
+                        </div>
+                        <ul class="task__list">
+                            <li class="task__list-item task__list-item--complete">
+                                <button class="task__button">
+                                    <i class="far fa-check-square"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--incomplete">
+                                <button class="task__button">
+                                    <i class="fas fa-step-backward"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--archive">
+                                <button class="task__button">
+                                    <i class="fas fa-archive"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--desarchive">
+                                <button class="task__button">
+                                    <i class="fas fa-undo-alt"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--delete">
+                                <button class="task__button">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="task task--complete">
+                    <div class="task__box">
+                        <div class="task__title">
+                            <p class="task__title-label">Revoir les évènements en JS</p>
+                            <input type="text" name="title" value="Revoir les évènements en JS" class="task__title-field">
+                        </div>
+                        <div class="task__category">
+                            <p class="task__category-label">O'Clock</p>
+                        </div>
+                        <ul class="task__list">
+                            <li class="task__list-item task__list-item--complete">
+                                <button class="task__button">
+                                    <i class="far fa-check-square"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--incomplete">
+                                <button class="task__button">
+                                    <i class="fas fa-step-backward"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--archive">
+                                <button class="task__button">
+                                    <i class="fas fa-archive"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--desarchive">
+                                <button class="task__button">
+                                    <i class="fas fa-undo-alt"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--delete">
+                                <button class="task__button">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="task">
+                    <div class="task__box">
+                        <div class="task__title">
+                            <p class="task__title-label">Apprendre à apprendre</p>
+                            <input type="text" name="title" value="Apprendre à apprendre" class="task__title-field">
+                        </div>
+                        <div class="task__category">
+                            <p class="task__category-label">O'Clock</p>
+                        </div>
+                        <ul class="task__list">
+                            <li class="task__list-item task__list-item--complete">
+                                <button class="task__button">
+                                    <i class="far fa-check-square"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--incomplete">
+                                <button class="task__button">
+                                    <i class="fas fa-step-backward"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--archive">
+                                <button class="task__button">
+                                    <i class="fas fa-archive"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--desarchive">
+                                <button class="task__button">
+                                    <i class="fas fa-undo-alt"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--delete">
+                                <button class="task__button">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="task task--archive">
+                    <div class="task__box">
+                        <div class="task__title">
+                            <p class="task__title-label">Exemple de tâche archivée</p>
+                            <input type="text" name="title" value="Exemple de tâche archivée" class="task__title-field">
+                        </div>
+                        <div class="task__category">
+                            <p class="task__category-label">Courses</p>
+                        </div>
+                        <ul class="task__list">
+                            <li class="task__list-item task__list-item--complete">
+                                <button class="task__button">
+                                    <i class="far fa-check-square"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--incomplete">
+                                <button class="task__button">
+                                    <i class="fas fa-step-backward"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--archive">
+                                <button class="task__button">
+                                    <i class="fas fa-archive"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--desarchive">
+                                <button class="task__button">
+                                    <i class="fas fa-undo-alt"></i>
+                                </button>
+                            </li>
+                            <li class="task__list-item task__list-item--delete">
+                                <button class="task__button">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p class="footer__text">Un site réalisé from srcatch à la fin de la saison 07 chez O'Clock, en se basant sur celui ayant servi de support d'apprentissage durant cette même saison. De quoi réviser l'intégration en plus du back et du front : CSS vanilla, JS vanilla, PHP Lumen.</p>
+        </footer>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>
