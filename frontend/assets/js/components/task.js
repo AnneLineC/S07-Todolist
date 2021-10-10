@@ -42,18 +42,52 @@ const task = {
         const titleFieldElement = event.currentTarget;
         let newTitleFieldElement = titleFieldElement.value;
 
-        //TODO : Sauvegarder dans la BDD via l'API
+        // Récupération de l'id de la tâche éditée
+        const taskId = titleFieldElement.closest('.task').dataset.id;
 
-        taskElement = titleFieldElement.closest('.task');
+        // ---------------------------
+        // Requête à l'API
+        // ---------------------------
 
-        // Mise à jour du titre de la tâche dans l'élément p
-        const titleLabelElement = taskElement.querySelector('.task__title-label');
-        titleLabelElement.textContent = newTitleFieldElement;
+        let data = { 
+            title : newTitleFieldElement,
+        };
 
-        // Sortie du mode édition
-        taskElement.classList.remove('task--edit');
+        // Entêtes HTTP (headers) de la requête
+        const httpHeaders = new Headers();
+        httpHeaders.append("Content-Type", "application/json");
 
-        console.log('Tâche modifiée');
+        // Options de la requête
+        let fetchOptions = {
+            method: 'PATCH',
+            mode: 'cors',
+            cache: 'no-cache',
+            headers : httpHeaders,
+            body    : JSON.stringify(data)
+        };
+
+        // Exécution de la requête HTTP via XHR
+        fetch(app.apiBaseUrl + 'tasks/' + taskId, fetchOptions)
+        .then(
+            function(response) {
+                if (response.status == 204) {
+
+                    taskElement = titleFieldElement.closest('.task');
+
+                    // Mise à jour du titre de la tâche dans l'élément p
+                    const titleLabelElement = taskElement.querySelector('.task__title-label');
+                    titleLabelElement.textContent = newTitleFieldElement;
+
+                    // Sortie du mode édition
+                    taskElement.classList.remove('task--edit');
+
+                    console.log('Tâche modifiée');
+                    
+                } else {
+                    alert('Erreur lors de la modification en base de données');
+                }
+            }
+        );
 
     },
 

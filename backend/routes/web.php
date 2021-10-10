@@ -49,3 +49,11 @@ $router->get(
         'as'   => 'task-list'
     ]
 );
+
+$router->patch(
+    '/tasks/{id}',
+    [
+        'uses' => 'TaskController@update',
+        'as'   => 'task-update'
+    ]
+);
