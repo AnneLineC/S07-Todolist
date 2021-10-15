@@ -21,6 +21,13 @@ const task = {
         const buttonIncompleteElement = taskElement.querySelector('.task__list-item--incomplete');
         buttonIncompleteElement.addEventListener('click',task.handleIncompleteTaskClick);
 
+        // Evènements de l'archivage/désarchivage de la tâche
+        const buttonArchiveElement = taskElement.querySelector('.task__list-item--archive');
+        buttonArchiveElement.addEventListener('click',task.handleArchiveTaskClic);
+        const buttonDesarchiveElement = taskElement.querySelector('.task__list-item--desarchive');
+        buttonDesarchiveElement.addEventListener('click',task.handleDesarchiveTaskClic);
+
+
     },
 
     //* ----------------------------------------------------------------
@@ -192,6 +199,94 @@ const task = {
 
     },
 
+    handleArchiveTaskClic: function(event) {
+
+        const buttonElement = event.currentTarget;
+        const taskElement = buttonElement.closest('.task');
+        taskId = taskElement.dataset.id;
+
+        // ---------------------------
+        // Requête à l'API
+        // ---------------------------
+
+        let data = { 
+            status : 1
+        };
+
+        // Entêtes HTTP (headers) de la requête
+        const httpHeaders = new Headers();
+        httpHeaders.append("Content-Type", "application/json");
+
+        // Options de la requête
+        let fetchOptions = {
+            method: 'PATCH',
+            mode: 'cors',
+            cache: 'no-cache',
+            headers : httpHeaders,
+            body    : JSON.stringify(data)
+        };
+
+        // Exécution de la requête HTTP via XHR
+        fetch(app.apiBaseUrl + 'tasks/' + taskId, fetchOptions)
+        .then(
+            function(response) {
+                if (response.status == 204) {
+
+                    task.changeTaskArchive(taskElement);
+                    console.log('Tâche modifiée');
+                    
+                } else {
+                    alert('Erreur lors de la modification en base de données');
+                }
+            }
+        );
+
+    },
+
+    handleDesarchiveTaskClic: function(event) {
+
+        const buttonElement = event.currentTarget;
+        const taskElement = buttonElement.closest('.task');
+        taskId = taskElement.dataset.id;
+
+        // ---------------------------
+        // Requête à l'API
+        // ---------------------------
+
+        let data = { 
+            status : 0
+        };
+
+        // Entêtes HTTP (headers) de la requête
+        const httpHeaders = new Headers();
+        httpHeaders.append("Content-Type", "application/json");
+
+        // Options de la requête
+        let fetchOptions = {
+            method: 'PATCH',
+            mode: 'cors',
+            cache: 'no-cache',
+            headers : httpHeaders,
+            body    : JSON.stringify(data)
+        };
+
+        // Exécution de la requête HTTP via XHR
+        fetch(app.apiBaseUrl + 'tasks/' + taskId, fetchOptions)
+        .then(
+            function(response) {
+                if (response.status == 204) {
+
+                    task.changeTaskArchive(taskElement);
+                    console.log('Tâche modifiée');
+                    
+                } else {
+                    alert('Erreur lors de la modification en base de données');
+                }
+            }
+        );
+
+    },
+
     //* ----------------------------------------------------------------
     //* DOM
     //* ----------------------------------------------------------------
@@ -221,9 +316,14 @@ const task = {
 
     changeTaskCompletion: function(taskElement) {
 
-        taskElement.classList.toggle('task--todo');
         taskElement.classList.toggle('task--complete');
 
     },
+
+    changeTaskArchive: function(taskElement) {
+        
+        taskElement.classList.toggle('task--archive');
+
+    }
 
 }

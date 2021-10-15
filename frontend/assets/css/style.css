@@ -188,7 +188,8 @@ body {
 }
 
 .task--archive .task__list-item--archive, 
-.task--archive .task__list-item--complete {
+.task--archive .task__list-item--complete,
+.task--archive .task__list-item--incomplete {
     display: none;
 }
 
