@@ -50,6 +50,14 @@ $router->get(
     ]
 );
 
+$router->post(
+    '/tasks',
+    [
+        'uses' => 'TaskController@add',
+        'as'   => 'task-add'
+    ]
+);
+
 $router->patch(
     '/tasks/{id}',
     [

@@ -16,6 +16,37 @@ class TaskController extends Controller
         return response()->json(Task::all()->load('category'), 200);
     }
 
+
+    /**
+     * HTTP method : POST
+     * URL : /tasks
+     */
+    public function add( Request $request )
+    {
+
+        $newTask = new Task();
+
+        // Récupération des données
+        $newTask->title = $request->input('title');
+        $newTask->category_id = $request->input('categoryId');
+
+        $isInserted = $newTask->save();
+
+        // Récupération des informations de la catégorie associée
+        $newTask->load('category');
+
+        if( $isInserted ) // Si l'ajout a fonctionné
+        {
+            return response()->json($newTask, 201);
+        }
+        else
+        {
+            // Internal Server Error
+            return response("", 500);
+        }
+
+    }
+
     /**
      * HTTP method : PATCH
      * URL : /tasks/{id}
