@@ -15,6 +15,12 @@ const task = {
         taskTitleFieldElement.addEventListener('blur', task.handleValidateNewTaskTitle);
         taskTitleFieldElement.addEventListener('keydown', task.handleValidateNewTaskTitleOnKeyDown);
 
+        // Evènements la complétion/décomplétion de la tâche
+        const buttonCompleteElement = taskElement.querySelector('.task__list-item--complete');
+        buttonCompleteElement.addEventListener('click',task.handleCompleteTaskClick);
+        const buttonIncompleteElement = taskElement.querySelector('.task__list-item--incomplete');
+        buttonIncompleteElement.addEventListener('click',task.handleIncompleteTaskClick);
+
     },
 
     //* ----------------------------------------------------------------
@@ -98,6 +104,94 @@ const task = {
         }
     },
 
+    handleCompleteTaskClick: function(event) {
+        
+        const buttonElement = event.currentTarget;
+        const taskElement = buttonElement.closest('.task');
+        taskId = taskElement.dataset.id;
+
+        // ---------------------------
+        // Requête à l'API
+        // ---------------------------
+
+        let data = { 
+            completion : 1
+        };
+
+        // Entêtes HTTP (headers) de la requête
+        const httpHeaders = new Headers();
+        httpHeaders.append("Content-Type", "application/json");
+
+        // Options de la requête
+        let fetchOptions = {
+            method: 'PATCH',
+            mode: 'cors',
+            cache: 'no-cache',
+            headers : httpHeaders,
+            body    : JSON.stringify(data)
+        };
+
+        // Exécution de la requête HTTP via XHR
+        fetch(app.apiBaseUrl + 'tasks/' + taskId, fetchOptions)
+        .then(
+            function(response) {
+                if (response.status == 204) {
+
+                    task.changeTaskCompletion(taskElement);
+                    console.log('Tâche modifiée');
+                    
+                } else {
+                    alert('Erreur lors de la modification en base de données');
+                }
+            }
+        );
+
+    },
+
+    handleIncompleteTaskClick: function(event) {
+        
+        const buttonElement = event.currentTarget;
+        const taskElement = buttonElement.closest('.task');
+        taskId = taskElement.dataset.id;
+
+        // ---------------------------
+        // Requête à l'API
+        // ---------------------------
+
+        let data = { 
+            completion : 0
+        };
+
+        // Entêtes HTTP (headers) de la requête
+        const httpHeaders = new Headers();
+        httpHeaders.append("Content-Type", "application/json");
+
+        // Options de la requête
+        let fetchOptions = {
+            method: 'PATCH',
+            mode: 'cors',
+            cache: 'no-cache',
+            headers : httpHeaders,
+            body    : JSON.stringify(data)
+        };
+
+        // Exécution de la requête HTTP via XHR
+        fetch(app.apiBaseUrl + 'tasks/' + taskId, fetchOptions)
+        .then(
+            function(response) {
+                if (response.status == 204) {
+
+                    task.changeTaskCompletion(taskElement);
+                    console.log('Tâche modifiée');
+                    
+                } else {
+                    alert('Erreur lors de la modification en base de données');
+                }
+            }
+        );
+
+    },
+
     //* ----------------------------------------------------------------
     //* DOM
     //* ----------------------------------------------------------------
@@ -113,12 +207,23 @@ const task = {
         newTaskElement.querySelector('.task__title-field').setAttribute('value', newTask.title);
         newTaskElement.querySelector('.task__category-label').textContent = newTask.category.name;
 
+        if (newTask.completion == 1) {
+            task.changeTaskCompletion(newTaskElement);
+        }
+
         // Insertion dans le DOM
         document.getElementById('taskList').prepend(newTaskElement);
 
         // Ajout des évènements dessus
         task.bindSingleTaskEvents(newTaskElement);
 
-    }
+    },
+
+    changeTaskCompletion: function(taskElement) {
+
+        taskElement.classList.toggle('task--todo');
+        taskElement.classList.toggle('task--complete');
+
+    },
 
 }
