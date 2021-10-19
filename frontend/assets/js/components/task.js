@@ -297,6 +297,7 @@ const task = {
 
         // Mise à jour de la tâche
         newTaskElement.dataset.id = newTask.id;
+        newTaskElement.dataset.categoryId = newTask.category_id;;
         newTaskElement.querySelector('.task__title-label').textContent = newTask.title;
         newTaskElement.querySelector('.task__title-field').setAttribute('value', newTask.title);
         newTaskElement.querySelector('.task__category-label').textContent = newTask.category.name;

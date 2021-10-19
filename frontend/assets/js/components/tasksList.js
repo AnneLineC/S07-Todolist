@@ -38,17 +38,25 @@ const tasksList = {
             );
     },
 
+    //* ----------------------------------------------------------------
+    //* DOM
+    //* ----------------------------------------------------------------
+
     /**
-     * Permet de cacher les tâches archives
+     * Permet de cacher les tâches archives et d'afficher les tâches actives
      */
-    hideArchiveTasks: function () {
+    hideArchiveTasks: function (categoryId = 0) {
         const tasksElement = document.querySelectorAll(".task");
 
         for (let taskElement of tasksElement) {
+
             if (taskElement.classList.contains("task--archive")) {
+                // Si la tâche est archivée, on ne l'affiche pas
                 taskElement.style.display = "none";
+
             } else {
-                taskElement.style.display = "block";
+                // Sinon, on filtre par catégorie
+                tasksList.applyCategoryFilter(taskElement, categoryId);
             }
         }
     },
@@ -56,15 +64,51 @@ const tasksList = {
     /**
      * Permet d'afficher les tâches archives et de cacher les tâches actives
      */
-    showArchiveTasks: function () {
+    showArchiveTasks: function (categoryId) {
         const tasksElement = document.querySelectorAll(".task");
 
         for (let taskElement of tasksElement) {
+
             if (taskElement.classList.contains("task--archive")) {
-                taskElement.style.display = "block";
+                // Si la tâche est archivée, on filtre par catégorie
+                tasksList.applyCategoryFilter(taskElement, categoryId);
             } else {
+                // Sinon, la tâche n'est pas affichée
                 taskElement.style.display = "none";
             }
         }
+    },
+
+    /**
+     * Permet de cacher par défaut toutes les tâches sauf celles de la catégorie séléctionnée
+     */
+    showTasksFilteredByCategory: function (categoryId) {
+        const tasksElement = document.querySelectorAll(".task");
+
+        for (let taskElement of tasksElement) {
+
+            if (taskElement.classList.contains("task--archive")) {
+                // Si la tâche est archivée
+                // On la laisse cachée
+            } else {
+                // Sinon, on filtre la tâche par catégorie
+                tasksList.applyCategoryFilter(taskElement, categoryId);
+            }
+        }
+    },
+
+    /**
+     * Permet de gérer si une tâche doit être affichée ou non, 
+     * en fonction de l'ID de la catégorie utilisée pour le filtre
+     */
+    applyCategoryFilter: function(taskElement, categoryId) {
+        if (categoryId == 0) {
+            taskElement.style.display = "block";
+        } else if (taskElement.dataset.categoryId == categoryId) {
+            taskElement.style.display = "block";
+        } else {
+            taskElement.style.display = "none";
+        }
     }
+
 }
