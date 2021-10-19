@@ -27,7 +27,6 @@ const task = {
         const buttonDesarchiveElement = taskElement.querySelector('.task__list-item--desarchive');
         buttonDesarchiveElement.addEventListener('click',task.handleDesarchiveTaskClic);
 
-
     },
 
     //* ----------------------------------------------------------------
@@ -304,6 +303,10 @@ const task = {
 
         if (newTask.completion == 1) {
             task.changeTaskCompletion(newTaskElement);
+        }
+
+        if (newTask.status == 1) {
+            task.changeTaskArchive(newTaskElement);
         }
 
         // Insertion dans le DOM
