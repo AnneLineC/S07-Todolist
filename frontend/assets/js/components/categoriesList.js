@@ -32,6 +32,7 @@ const categoriesList = {
                     categoriesList.createOptionElement( document.getElementById('filterCategorySelect'), category.name, category.id );
                     categoriesList.createOptionElement( document.getElementById('addTaskForm-selectCategory'), category.name, category.id );
                 }
+                categoriesList.createOptionElement( document.getElementById('addTaskForm-selectCategory'), 'Ajouter une catégorie', 'add' );
             }
         );
     },
@@ -49,5 +50,6 @@ const categoriesList = {
         optionElement.setAttribute('value', categoryId);
 
         selectElement.appendChild(optionElement);
+        // childNode[4].parentNode.insertBefore(childNode[4], childNode[3]);
     }
 }

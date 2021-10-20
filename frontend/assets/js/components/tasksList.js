@@ -27,6 +27,7 @@ const tasksList = {
         )
         .then(
             function (data) {
+                // console.log(data);
                 // Pour chaque tâche retournée par l'API, on crée une tâche dans le DOM
                 for (let taskObject of data) {
                     task.createTaskElement(taskObject);

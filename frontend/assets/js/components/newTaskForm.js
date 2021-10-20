@@ -1,13 +1,13 @@
 const newTaskForm = {
 
-    init: function() {
+    init: function () {
 
         const addTaskFormElement = document.getElementById('addTaskForm');
         addTaskFormElement.addEventListener('submit', newTaskForm.handleAddTaskFormSubmit);
 
     },
 
-    handleAddTaskFormSubmit: function(event) {
+    handleAddTaskFormSubmit: function (event) {
 
         event.preventDefault();
 
@@ -17,46 +17,49 @@ const newTaskForm = {
         const newTaskCategoryInput = document.getElementById('addTaskForm-selectCategory');
         const newTaskCategoryValue = newTaskCategoryInput.value;
 
-        // ---------------------------
-        // Requête à l'API
-        // ---------------------------
+        if (newTaskTitleValue !== '' && newTaskCategoryValue !== '0') {
 
-        let data = { 
-            title: newTaskTitleValue,
-            categoryId: newTaskCategoryValue,
-        };
+            // ---------------------------
+            // Requête à l'API
+            // ---------------------------
 
-        // Entêtes HTTP (headers) de la requête
-        const httpHeaders = new Headers();
-        httpHeaders.append("Content-Type", "application/json");
+            let data = {
+                title: newTaskTitleValue,
+                categoryId: newTaskCategoryValue,
+            };
 
-        // Options de la requête
-        let fetchOptions = {
-            method  : 'POST',
-            mode    : 'cors',
-            cache   : 'no-cache',
-            headers : httpHeaders,
-            body    : JSON.stringify(data)
-        };
+            // Entêtes HTTP (headers) de la requête
+            const httpHeaders = new Headers();
+            httpHeaders.append("Content-Type", "application/json");
 
-        // Exécution de la requête HTTP via XHR
-        fetch(app.apiBaseUrl + 'tasks', fetchOptions)
-        .then(function(response) {
-            if (response.status == 201) {
+            // Options de la requête
+            let fetchOptions = {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                headers: httpHeaders,
+                body: JSON.stringify(data)
+            };
 
-                response.json().then(function(newTask) {
-                    
-                    task.createTaskElement(newTask);
+            // Exécution de la requête HTTP via XHR
+            fetch(app.apiBaseUrl + 'tasks', fetchOptions)
+                .then(function (response) {
+                    if (response.status == 201) {
 
+                        response.json().then(function (newTask) {
+
+                            task.createTaskElement(newTask);
+
+                        });
+
+                    } else {
+                        alert('Erreur lors de l\'ajout en base de données');
+                    }
                 });
 
-            } else {
-                alert('Erreur lors de l\'ajout en base de données');
-            }
-        });
-        
-
-
+        } else {
+            alert('Merci de renseigner un nom de tâche et une catégorie !');
+        }
 
     }
 
