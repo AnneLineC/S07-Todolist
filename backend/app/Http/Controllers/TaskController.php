@@ -94,4 +94,24 @@ class TaskController extends Controller
             return response('', 500);
         }
     }
+
+    /**
+   * HTTP method : DELETE
+   * URL : /tasks/{id}
+   */
+    public function delete( int $id )
+    {
+        $task = Task::find($id);
+
+        if ($task) {
+            if($task->delete()) {
+                return response( '', 204 );
+            } else {
+                return response( '', 500 );
+            }
+        }
+        else {
+            return response( '', 104 );
+        }
+    }
 }

@@ -4,7 +4,7 @@ const task = {
     //* EVENTS
     //* ----------------------------------------------------------------
 
-    bindSingleTaskEvents: function(taskElement) {
+    bindSingleTaskEvents: function (taskElement) {
 
         // Evènement permettant l'édition du titre de la tâche
         const taskTitleLabelElement = taskElement.querySelector('.task__title-label');
@@ -17,15 +17,19 @@ const task = {
 
         // Evènements la complétion/décomplétion de la tâche
         const buttonCompleteElement = taskElement.querySelector('.task__list-item--complete');
-        buttonCompleteElement.addEventListener('click',task.handleCompleteTaskClick);
+        buttonCompleteElement.addEventListener('click', task.handleCompleteTaskClick);
         const buttonIncompleteElement = taskElement.querySelector('.task__list-item--incomplete');
-        buttonIncompleteElement.addEventListener('click',task.handleIncompleteTaskClick);
+        buttonIncompleteElement.addEventListener('click', task.handleIncompleteTaskClick);
 
         // Evènements de l'archivage/désarchivage de la tâche
         const buttonArchiveElement = taskElement.querySelector('.task__list-item--archive');
-        buttonArchiveElement.addEventListener('click',task.handleArchiveTaskClic);
+        buttonArchiveElement.addEventListener('click', task.handleArchiveTaskClic);
         const buttonDesarchiveElement = taskElement.querySelector('.task__list-item--desarchive');
-        buttonDesarchiveElement.addEventListener('click',task.handleDesarchiveTaskClic);
+        buttonDesarchiveElement.addEventListener('click', task.handleDesarchiveTaskClic);
+
+        // Evènement permettant de supprimer une tâche
+        const buttonDeleteElement = taskElement.querySelector('.task__list-item--delete');
+        buttonDeleteElement.addEventListener('click', task.handleDeleteTaskClic);
 
     },
 
@@ -33,11 +37,11 @@ const task = {
     //* HANDLERS
     //* ----------------------------------------------------------------
 
-    handleTaskTitleLabelClick: function(event) {
+    handleTaskTitleLabelClick: function (event) {
 
         // Récupération de la tâche sur laquelle le click a eu lieu
-        const taskElement = event.currentTarget.closest( ".task" );
-        
+        const taskElement = event.currentTarget.closest(".task");
+
         // Rajout de la classe CSS à la tâche, permettant son passage en mode "édition"
         taskElement.classList.add('task--edit');
 
@@ -48,7 +52,7 @@ const task = {
 
     },
 
-    handleValidateNewTaskTitle: function(event) {
+    handleValidateNewTaskTitle: function (event) {
 
         // Récupération de la valeur fournie
         const titleFieldElement = event.currentTarget;
@@ -61,8 +65,8 @@ const task = {
         // Requête à l'API
         // ---------------------------
 
-        let data = { 
-            title : newTitleFieldElement,
+        let data = {
+            title: newTitleFieldElement,
         };
 
         // Entêtes HTTP (headers) de la requête
@@ -74,44 +78,44 @@ const task = {
             method: 'PATCH',
             mode: 'cors',
             cache: 'no-cache',
-            headers : httpHeaders,
-            body    : JSON.stringify(data)
+            headers: httpHeaders,
+            body: JSON.stringify(data)
         };
 
         // Exécution de la requête HTTP via XHR
         fetch(app.apiBaseUrl + 'tasks/' + taskId, fetchOptions)
-        .then(
-            function(response) {
-                if (response.status == 204) {
+            .then(
+                function (response) {
+                    if (response.status == 204) {
 
-                    taskElement = titleFieldElement.closest('.task');
+                        taskElement = titleFieldElement.closest('.task');
 
-                    // Mise à jour du titre de la tâche dans l'élément p
-                    const titleLabelElement = taskElement.querySelector('.task__title-label');
-                    titleLabelElement.textContent = newTitleFieldElement;
+                        // Mise à jour du titre de la tâche dans l'élément p
+                        const titleLabelElement = taskElement.querySelector('.task__title-label');
+                        titleLabelElement.textContent = newTitleFieldElement;
 
-                    // Sortie du mode édition
-                    taskElement.classList.remove('task--edit');
+                        // Sortie du mode édition
+                        taskElement.classList.remove('task--edit');
 
-                    console.log('Tâche modifiée');
-                    
-                } else {
-                    alert('Erreur lors de la modification en base de données');
+                        console.log('Tâche modifiée');
+
+                    } else {
+                        alert('Erreur lors de la modification en base de données');
+                    }
                 }
-            }
-        );
+            );
 
     },
 
-    handleValidateNewTaskTitleOnKeyDown: function(event) {
-        if(event.key === "Enter") {
+    handleValidateNewTaskTitleOnKeyDown: function (event) {
+        if (event.key === "Enter") {
             const titleFieldElement = event.currentTarget;
             titleFieldElement.blur();
         }
     },
 
-    handleCompleteTaskClick: function(event) {
-        
+    handleCompleteTaskClick: function (event) {
+
         const buttonElement = event.currentTarget;
         const taskElement = buttonElement.closest('.task');
         taskId = taskElement.dataset.id;
@@ -120,8 +124,8 @@ const task = {
         // Requête à l'API
         // ---------------------------
 
-        let data = { 
-            completion : 1
+        let data = {
+            completion: 1
         };
 
         // Entêtes HTTP (headers) de la requête
@@ -133,29 +137,29 @@ const task = {
             method: 'PATCH',
             mode: 'cors',
             cache: 'no-cache',
-            headers : httpHeaders,
-            body    : JSON.stringify(data)
+            headers: httpHeaders,
+            body: JSON.stringify(data)
         };
 
         // Exécution de la requête HTTP via XHR
         fetch(app.apiBaseUrl + 'tasks/' + taskId, fetchOptions)
-        .then(
-            function(response) {
-                if (response.status == 204) {
+            .then(
+                function (response) {
+                    if (response.status == 204) {
 
-                    task.changeTaskCompletion(taskElement);
-                    console.log('Tâche modifiée');
-                    
-                } else {
-                    alert('Erreur lors de la modification en base de données');
+                        task.changeTaskCompletion(taskElement);
+                        console.log('Tâche modifiée');
+
+                    } else {
+                        alert('Erreur lors de la modification en base de données');
+                    }
                 }
-            }
-        );
+            );
 
     },
 
-    handleIncompleteTaskClick: function(event) {
-        
+    handleIncompleteTaskClick: function (event) {
+
         const buttonElement = event.currentTarget;
         const taskElement = buttonElement.closest('.task');
         taskId = taskElement.dataset.id;
@@ -164,8 +168,8 @@ const task = {
         // Requête à l'API
         // ---------------------------
 
-        let data = { 
-            completion : 0
+        let data = {
+            completion: 0
         };
 
         // Entêtes HTTP (headers) de la requête
@@ -177,28 +181,28 @@ const task = {
             method: 'PATCH',
             mode: 'cors',
             cache: 'no-cache',
-            headers : httpHeaders,
-            body    : JSON.stringify(data)
+            headers: httpHeaders,
+            body: JSON.stringify(data)
         };
 
         // Exécution de la requête HTTP via XHR
         fetch(app.apiBaseUrl + 'tasks/' + taskId, fetchOptions)
-        .then(
-            function(response) {
-                if (response.status == 204) {
+            .then(
+                function (response) {
+                    if (response.status == 204) {
 
-                    task.changeTaskCompletion(taskElement);
-                    console.log('Tâche modifiée');
-                    
-                } else {
-                    alert('Erreur lors de la modification en base de données');
+                        task.changeTaskCompletion(taskElement);
+                        console.log('Tâche modifiée');
+
+                    } else {
+                        alert('Erreur lors de la modification en base de données');
+                    }
                 }
-            }
-        );
+            );
 
     },
 
-    handleArchiveTaskClic: function(event) {
+    handleArchiveTaskClic: function (event) {
 
         const buttonElement = event.currentTarget;
         const taskElement = buttonElement.closest('.task');
@@ -208,8 +212,8 @@ const task = {
         // Requête à l'API
         // ---------------------------
 
-        let data = { 
-            status : 1
+        let data = {
+            status: 1
         };
 
         // Entêtes HTTP (headers) de la requête
@@ -221,28 +225,28 @@ const task = {
             method: 'PATCH',
             mode: 'cors',
             cache: 'no-cache',
-            headers : httpHeaders,
-            body    : JSON.stringify(data)
+            headers: httpHeaders,
+            body: JSON.stringify(data)
         };
 
         // Exécution de la requête HTTP via XHR
         fetch(app.apiBaseUrl + 'tasks/' + taskId, fetchOptions)
-        .then(
-            function(response) {
-                if (response.status == 204) {
+            .then(
+                function (response) {
+                    if (response.status == 204) {
 
-                    task.changeTaskArchive(taskElement);
-                    console.log('Tâche modifiée');
-                    
-                } else {
-                    alert('Erreur lors de la modification en base de données');
+                        task.changeTaskArchive(taskElement);
+                        console.log('Tâche modifiée');
+
+                    } else {
+                        alert('Erreur lors de la modification en base de données');
+                    }
                 }
-            }
-        );
+            );
 
     },
 
-    handleDesarchiveTaskClic: function(event) {
+    handleDesarchiveTaskClic: function (event) {
 
         const buttonElement = event.currentTarget;
         const taskElement = buttonElement.closest('.task');
@@ -252,8 +256,8 @@ const task = {
         // Requête à l'API
         // ---------------------------
 
-        let data = { 
-            status : 0
+        let data = {
+            status: 0
         };
 
         // Entêtes HTTP (headers) de la requête
@@ -265,32 +269,67 @@ const task = {
             method: 'PATCH',
             mode: 'cors',
             cache: 'no-cache',
-            headers : httpHeaders,
-            body    : JSON.stringify(data)
+            headers: httpHeaders,
+            body: JSON.stringify(data)
         };
 
         // Exécution de la requête HTTP via XHR
         fetch(app.apiBaseUrl + 'tasks/' + taskId, fetchOptions)
-        .then(
-            function(response) {
-                if (response.status == 204) {
+            .then(
+                function (response) {
+                    if (response.status == 204) {
 
-                    task.changeTaskArchive(taskElement);
-                    console.log('Tâche modifiée');
-                    
-                } else {
-                    alert('Erreur lors de la modification en base de données');
+                        task.changeTaskArchive(taskElement);
+                        console.log('Tâche modifiée');
+
+                    } else {
+                        alert('Erreur lors de la modification en base de données');
+                    }
                 }
-            }
-        );
+            );
 
+    },
+
+    handleDeleteTaskClic: function (event) {
+
+        let taskDeleteButtonElement = event.currentTarget;
+        let taskElement = taskDeleteButtonElement.closest(".task");
+        taskId = taskElement.dataset.id;
+
+        // ---------------------------
+        // Requête à l'API
+        // ---------------------------
+
+        const httpHeaders = new Headers();
+        httpHeaders.append("Content-Type", "application/json");
+
+        const fetchOptions = {
+            method: 'DELETE',
+            mode: 'cors',
+            cache: 'no-cache',
+            headers: httpHeaders,
+        };
+
+        fetch(app.apiBaseUrl + 'tasks/' + taskId, fetchOptions)
+        .then(function (response) {
+
+            if (response.status == 204) {
+                console.log('Suppression effectuée');
+                taskElement.remove();
+
+            } else {
+                console.log("Error Fetch : " + response.status);
+                alert("Impossible de supprimer la tâche (" + response.status + ")");
+            }
+
+        });
     },
 
     //* ----------------------------------------------------------------
     //* DOM
     //* ----------------------------------------------------------------
 
-    createTaskElement: function(newTask) {
+    createTaskElement: function (newTask) {
 
         // Création d'un élement tâche depuis l'élément <template>
         const newTaskElement = document.getElementById('taskTemplate').content.cloneNode(true).firstElementChild;
@@ -318,14 +357,14 @@ const task = {
 
     },
 
-    changeTaskCompletion: function(taskElement) {
+    changeTaskCompletion: function (taskElement) {
 
         taskElement.classList.toggle('task--complete');
 
     },
 
-    changeTaskArchive: function(taskElement) {
-        
+    changeTaskArchive: function (taskElement) {
+
         taskElement.classList.toggle('task--archive');
         taskElement.style.display = "none";
 
