@@ -40,6 +40,12 @@ body {
     font-size: 3rem;
 }
 
+.list-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-left: 1rem;
+}
+
 .nav {
     clear: both;
     display: flex;
@@ -192,7 +198,6 @@ body {
 .task--archive .task__list-item--incomplete {
     display: none;
 }
-
 
 .footer {
     background-color: var(--color-light);

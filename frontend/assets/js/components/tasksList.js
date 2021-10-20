@@ -20,22 +20,22 @@ const tasksList = {
 
         // Exécution de la requête HTTP via XHR
         fetch(app.apiBaseUrl + '/tasks', fetchOptions)
-            .then(
-                function (response) {
-                    return response.json();
+        .then(
+            function (response) {
+                return response.json();
+            }
+        )
+        .then(
+            function (data) {
+                // Pour chaque tâche retournée par l'API, on crée une tâche dans le DOM
+                for (let taskObject of data) {
+                    task.createTaskElement(taskObject);
                 }
-            )
-            .then(
-                function (data) {
-                    // Pour chaque tâche retournée par l'API, on crée une tâche dans le DOM
-                    for (let taskObject of data) {
-                        task.createTaskElement(taskObject);
-                    }
 
-                    // On cache ensuite par défaut les tâches archivées
-                    tasksList.hideArchiveTasks();
-                }
-            );
+                // On cache ensuite par défaut les tâches archivées
+                tasksList.hideArchiveTasks();
+            }
+        );
 
     },
 
@@ -47,13 +47,19 @@ const tasksList = {
      * Permet de cacher les tâches archives et d'afficher les tâches actives
      */
     hideArchiveTasks: function (categoryId = 0) {
-        const tasksElement = document.querySelectorAll(".task");
+        const listTitleElement = document.querySelector('.list-title');
+        listTitleElement.textContent = 'Liste des tâches';
+
+        const addFormElement = document.querySelector('#addTaskForm');
+        addFormElement.style.display = 'flex';
+
+        const tasksElement = document.querySelectorAll('.task');
 
         for (let taskElement of tasksElement) {
 
-            if (taskElement.classList.contains("task--archive")) {
+            if (taskElement.classList.contains('task--archive')) {
                 // Si la tâche est archivée, on ne l'affiche pas
-                taskElement.style.display = "none";
+                taskElement.style.display = 'none';
 
             } else {
                 // Sinon, on filtre par catégorie
@@ -66,16 +72,22 @@ const tasksList = {
      * Permet d'afficher les tâches archives et de cacher les tâches actives
      */
     showArchiveTasks: function (categoryId) {
-        const tasksElement = document.querySelectorAll(".task");
+        const listTitleElement = document.querySelector('.list-title');
+        listTitleElement.textContent = 'Archives';
+
+        const addFormElement = document.querySelector('#addTaskForm');
+        addFormElement.style.display = 'none';
+
+        const tasksElement = document.querySelectorAll('.task');
 
         for (let taskElement of tasksElement) {
 
-            if (taskElement.classList.contains("task--archive")) {
+            if (taskElement.classList.contains('task--archive')) {
                 // Si la tâche est archivée, on filtre par catégorie
                 tasksList.applyCategoryFilter(taskElement, categoryId);
             } else {
                 // Sinon, la tâche n'est pas affichée
-                taskElement.style.display = "none";
+                taskElement.style.display = 'none';
             }
         }
     },
@@ -84,13 +96,13 @@ const tasksList = {
      * Permet de cacher par défaut toutes les tâches sauf celles de la catégorie séléctionnée
      */
     showTasksFilteredByCategory: function (categoryId) {
-        const tasksElement = document.querySelectorAll(".task");
+        const tasksElement = document.querySelectorAll('.task');
 
         for (let taskElement of tasksElement) {
 
             // Si on a demandé l'affichage des tâches actives
             if (filters.showArchivedTasks === false) {
-                if (taskElement.classList.contains("task--archive")) {
+                if (taskElement.classList.contains('task--archive')) {
                     // Si la tâche est archivée, on la laisse cachée
 
                 } else {
@@ -100,7 +112,7 @@ const tasksList = {
 
             // Si on a demandé l'affichage des tâche archivées
             } else {
-                if (taskElement.classList.contains("task--archive")) {
+                if (taskElement.classList.contains('task--archive')) {
                     // Si la tâche est archivée, on filtre la tâche par catégorie
                     tasksList.applyCategoryFilter(taskElement, categoryId);
                 } else {
@@ -116,11 +128,11 @@ const tasksList = {
      */
     applyCategoryFilter: function(taskElement, categoryId) {
         if (categoryId == 0) {
-            taskElement.style.display = "block";
+            taskElement.style.display = 'block';
         } else if (taskElement.dataset.categoryId == categoryId) {
-            taskElement.style.display = "block";
+            taskElement.style.display = 'block';
         } else {
-            taskElement.style.display = "none";
+            taskElement.style.display = 'none';
         }
     },
 

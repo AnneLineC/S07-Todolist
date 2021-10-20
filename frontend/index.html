@@ -44,18 +44,24 @@
         </header>
 
         <main class="main">
+
             <form class="add-form" id="addTaskForm">
                 <input type="text" id="addTaskForm-titleInput" class="add-form__input" placeholder="Nom de la tâche">
                 <select class="add-form__select" id="addTaskForm-selectCategory">
-                    <option class="add-form__option" value="">Toutes les catégories</option>
+                    <option class="add-form__option" value="0">Choisir une catégorie</option>
                 </select>
                 <button type="submit" class="add-form__button" id="addTaskForm-buttonSubmit">
                     <i class="fas fa-plus"></i> Ajouter
                 </button>
             </form>
 
-            <!-- Liste des tâches (gérée en JS) -->
-            <section id="taskList"></section>
+            <h2 class="list-title"></h2>
+
+            <section id="taskList">
+                
+                <!-- Liste des tâches (gérée en JS) -->
+
+            </section>
         </main>
 
         <footer class="footer">
