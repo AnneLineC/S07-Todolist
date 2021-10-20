@@ -327,6 +327,7 @@ const task = {
     changeTaskArchive: function(taskElement) {
         
         taskElement.classList.toggle('task--archive');
+        taskElement.style.display = "none";
 
     }
 
