@@ -36,6 +36,7 @@ const tasksList = {
                     tasksList.hideArchiveTasks();
                 }
             );
+
     },
 
     //* ----------------------------------------------------------------
@@ -87,12 +88,24 @@ const tasksList = {
 
         for (let taskElement of tasksElement) {
 
-            if (taskElement.classList.contains("task--archive")) {
-                // Si la tâche est archivée
-                // On la laisse cachée
+            // Si on a demandé l'affichage des tâches actives
+            if (filters.showArchivedTasks === false) {
+                if (taskElement.classList.contains("task--archive")) {
+                    // Si la tâche est archivée, on la laisse cachée
+
+                } else {
+                    // Sinon, on filtre la tâche par catégorie
+                    tasksList.applyCategoryFilter(taskElement, categoryId);
+                }
+
+            // Si on a demandé l'affichage des tâche archivées
             } else {
-                // Sinon, on filtre la tâche par catégorie
-                tasksList.applyCategoryFilter(taskElement, categoryId);
+                if (taskElement.classList.contains("task--archive")) {
+                    // Si la tâche est archivée, on filtre la tâche par catégorie
+                    tasksList.applyCategoryFilter(taskElement, categoryId);
+                } else {
+                    // Sinon, on laisse la tâche cachée
+                }
             }
         }
     },
@@ -109,6 +122,6 @@ const tasksList = {
         } else {
             taskElement.style.display = "none";
         }
-    }
+    },
 
 }
